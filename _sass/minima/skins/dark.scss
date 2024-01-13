@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+$color-scheme-auto: false;
+$color-scheme-dark: true;
+@import "minima/skins/auto";
+
+figcaption {
+    font-style: italic;
+    text-align: center;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+}
+
+figure>img {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1em;
+}
+
+// Smaller images 
+img.w-400 {
+    max-width: 400px;
+}
+
+img.w-500 {
+    max-width: 500px;
+}
+
+img.w-600 {
+    max-width: 600px;
+}
+
+img.w-700 {
+    max-width: 700px;
+}
+
+img {
+    width: 100%;
+}
+
+iframe {
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+    border: none;
+}
+
+table {
+    font-size: 85%;
+    // padding-bottom: 1em;
+}
+
+table.auto {
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+}
