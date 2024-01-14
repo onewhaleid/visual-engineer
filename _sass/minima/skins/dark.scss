@@ -4,6 +4,13 @@ $color-scheme-auto: false;
 $color-scheme-dark: true;
 @import "minima/skins/auto";
 
+.site-title::before {
+    content: url("/assets/2023/01/logo-40x40.png");
+    position: relative;
+    margin: 10px;
+    bottom: -10px;
+}
+
 figcaption {
     font-style: italic;
     text-align: center;
