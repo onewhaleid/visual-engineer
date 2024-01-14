@@ -7,6 +7,7 @@ layout: post
 guid: 'https://visualengineer.org/?p=4'
 permalink: /2023/01/23/is-my-train-on-time/
 image: /assets/2023/01/departure-board-feature.png
+description: German railways have a reputation for punctuality. The reality is different.
 ---
 
 Deutche Bahn has a app (DB Navigator) which has real-time info on train services in Germany. One of the pages is called “Is my train on time?”. Whenever I open the page, I expect to see this:

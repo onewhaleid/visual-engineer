@@ -7,6 +7,7 @@ layout: post
 guid: 'https://visualengineer.org/?p=3'
 permalink: /2023/01/10/german-holidays/
 image: /wp-content/uploads/2023/01/map.png
+description: Germany has two kinds of public holidays; good ones and fickle ones.
 categories:
     - Uncategorised
 ---
