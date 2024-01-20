@@ -1,0 +1,185 @@
+<head>
+    <style>
+        .centre {
+            margin-left: 10px;
+            margin-right: 10px;
+            /* width: 80%; */
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            font-size: x-large;
+            border-radius: 2px;
+            width: 120px;
+            height: 50px;
+        }
+
+        .box-wide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            font-size: large;
+            border-radius: 2px;
+            width: 250px;
+            height: 50px;
+        }
+        
+        .label {
+            font-family: sans-serif;
+            color: #bbbbbb;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="centre">
+        <tr class="label">
+            <td>
+                Iceland
+            </td>
+            <td>
+                Australia
+            </td>
+            <td>
+                Realfeel
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="box" id="color-box-is"></div>
+            </td>
+            <td>
+                <div class="box" id="color-box-au"></div>
+            </td>
+            <td>
+                <div class="box-wide" id="color-box-rf"></div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="centre">
+        <tr class="label">
+            <td>
+                Temperature control
+            </td>
+            <td>
+                <input type="range" min="-26" max="54" step="2" id="color-slider" oninput="changeColor()">
+            </td>
+        </tr>
+    </table>
+
+    <script>
+
+        var auColours = [
+            "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff",
+            "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#011f69",
+            "#0b3c97", "#0e51d7", "#1465e7", "#1e72f1", "#2982f4", "#3d97fa",
+            "#50aafa", "#79c9fa", "#c8e6ff", "#ffffff", "#c8ffbe", "#b4faaa",
+            "#97f58d", "#fffaaa", "#fee978", "#ffc13d", "#fea001", "#fe6001",
+            "#e01401", "#c00000", "#a40001", "#660132", "#660167", "#980098",
+            "#cc01cd", "#fe01ff", "#ff33ff", "#ff67fe", "#ff99ff"
+        ]
+
+        var isColours = [
+            "#7ae27b", "#b4f4b7", "#b2e0b1", "#320f9d", "#4d2ab2", "#7053c2",
+            "#997ce2", "#b2a7d5", "#11529d", "#2e71ad", "#538fc9", "#80b3e6",
+            "#b1d8ff", "#feffae", "#f1e283", "#dfc460", "#d2993c", "#c06921",
+            "#d6785d", "#c54d40", "#b21a2a", "#a00027", "#94012a", "#b245c8",
+            "#9d1bb7", "#9d1ab4", "#8b00a1", "#77008e", "#ffffff", "#ffffff",
+            "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff",
+            "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"
+        ]
+
+        var rfColours = [
+            "#1102a0", "#1102a0", "#0125c1", "#0125c1", "#0125c1", "#0125c1",
+            "#0125c1", "#0c47ec", "#0c47ec", "#0c47ec", "#0c47ec", "#0c47ec",
+            "#3686c7", "#3686c7", "#3686c7", "#01958c", "#01958c", "#01958c",
+            "#01958c", "#67b104", "#67b104", "#67b104", "#92c700", "#92c700",
+            "#92c700", "#92c700", "#92c700", "#fad700", "#fad700", "#ffba00",
+            "#ffba00", "#ffba00", "#f89202", "#f89202", "#ee630d", "#ee630d",
+            "#dc230a", "#dc230a", "#dc230a", "#bb0201", "#bb0201"
+        ]
+
+        var descriptions = [
+            "Bitterly cold", "Bitterly cold", "Quite cold", "Quite cold", "Quite cold",
+            "Quite cold", "Quite cold", "Very cold", "Very cold", "Very cold",
+            "Very cold", "Very cold", "Cold", "Cold", "Cold", "Chilly", "Chilly",
+            "Chilly", "Chilly", "Cool", "Cool", "Cool", "Pleasant", "Pleasant",
+            "Pleasant", "Pleasant", "Pleasant", "Very warm", "Very warm", "Hot", "Hot",
+            "Hot", "Very hot", "Very hot", "Dangerous heat", "Dangerous heat",
+            "Very dangerous heat", "Very dangerous heat", "Very dangerous heat",
+            "Extremely dangerous heat", "Extremely dangerous heat"
+        ]
+
+        var temperatures = [
+            "-26", "-24", "-22", "-20", "-18", "-16", "-14", "-12", "-10", "-8", "-6",
+            "-4", "-2", "0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20",
+            "22", "24", "26", "28", "30", "32", "34", "36", "38", "40", "42", "44",
+            "46", "48", "50", "52", "54"
+        ]
+
+        function textColour(bgColor, lightColor, darkColor) {
+            var color = (bgColor.charAt(0) === "#") ? bgColor.substring(1, 7) : bgColor;
+            var r = parseInt(color.substring(0, 2), 16); // hexToR
+            var g = parseInt(color.substring(2, 4), 16); // hexToG
+            var b = parseInt(color.substring(4, 6), 16); // hexToB
+            var uicolors = [r / 255, g / 255, b / 255];
+            var c = uicolors.map((col) => {
+                if (col <= 0.03928) {
+                    return col / 12.92;
+                }
+                return Math.pow((col + 0.055) / 1.055, 2.4);
+            });
+            var L = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2]);
+            return (L > 0.179) ? darkColor : lightColor;
+        }
+
+
+        function changeColor() {
+            var slider = document.getElementById("color-slider");
+            var value = slider.value;
+            var colorBoxAu = document.getElementById("color-box-au");
+            var colorBoxIs = document.getElementById("color-box-is");
+            var colorBoxRf = document.getElementById("color-box-rf");
+            var idx = temperatures.indexOf(value)
+
+            var auColour = auColours[idx]
+            colorBoxAu.style.backgroundColor = auColour;
+            if (value < -5) {
+                colorBoxAu.innerHTML = "Too cold!";
+                var bg = "repeating-linear-gradient(45deg,#444444,#444444 6px,#011f69 6px,#011f69 14px)"
+                colorBoxAu.style.background = bg
+            } else {
+                colorBoxAu.innerHTML = value + "°C";
+                colorBoxAu.style.color = textColour(auColour, "#dde4e9", "#2c2626");
+                colorBoxAu.style.background = auColour
+            }
+
+            var isColour = isColours[idx]
+            colorBoxIs.style.backgroundColor = isColour;
+            if (value > 29) {
+                colorBoxIs.innerHTML = "Too hot!";
+                var bg = "repeating-linear-gradient(45deg,#444444,#444444 6px,#77008e 6px,#77008e 14px)"
+                colorBoxIs.style.background = bg
+            } else {
+                colorBoxIs.innerHTML = value + "°C";
+                colorBoxIs.style.color = textColour(isColour, "#dde4e9", "#2c2626");
+                colorBoxIs.style.background = isColour
+            }
+
+            var rfColour = rfColours[idx]
+            colorBoxRf.style.backgroundColor = rfColour;
+            colorBoxRf.style.color = textColour(rfColour, "#dde4e9", "#2c2626");
+            colorBoxRf.innerHTML = descriptions[idx];
+            colorBoxRf.style.background = rfColour
+        }
+
+        // Initialise
+        changeColor("14")
+
+    </script>
+</body>
