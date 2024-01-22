@@ -6,7 +6,7 @@ author: dan
 layout: post
 guid: 'https://visualengineer.org/?p=4'
 permalink: /2023/01/23/is-my-train-on-time/
-image: /assets/2023/01/departure-board-feature.png
+image: https://www.visualengineer.org/assets/2023/01/departure-board-feature.png
 description: German railways have a reputation for punctuality. The reality is different.
 ---
 
