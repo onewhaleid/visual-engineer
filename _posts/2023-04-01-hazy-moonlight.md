@@ -6,7 +6,7 @@ author: dan
 layout: post
 guid: 'https://visualengineer.org/?p=5'
 permalink: /2023/04/01/hazy-moonlight/
-image: /assets/2023/04/feature.png
+image: https://www.visualengineer.org/assets/2023/04/weather-feature.png
 description: Weather is everything that gets in between you and the sun.
 ---
 
